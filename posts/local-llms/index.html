@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Elizabeth Leshuk">
-<meta name="dcterms.date" content="2024-06-10">
+<meta name="author" content="Sven Nelson">
+<meta name="dcterms.date" content="2024-06-03">
 
-<title>Data Science Tutorials - Getting to know ggplot2</title>
+<title>Data Science Tutorials - Setting up local LLMs using ollama</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,10 +142,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Getting to know ggplot2</h1>
+      <h1 class="title">Setting up local LLMs using ollama</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">plotting</div>
+                <div class="quarto-category">news</div>
               </div>
                   </div>
   </div>
@@ -156,14 +155,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Elizabeth Leshuk </p>
+               <p>Sven Nelson </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 10, 2024</p>
+        <p class="date">June 3, 2024</p>
       </div>
     </div>
     
@@ -181,15 +180,173 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This is a post with executable code. Testing adding text here.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<section id="getting-started-in-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-in-rstudio">Getting started in RStudio</h2>
+<ul>
+<li>Brief overview</li>
+<li>Projects</li>
+<li>Github</li>
+<li>(very brief) Quarto/this blog</li>
+</ul>
+</section>
+<section id="installing-local-llms" class="level2">
+<h2 class="anchored" data-anchor-id="installing-local-llms">Installing local LLMs</h2>
+<section id="ollama" class="level3">
+<h3 class="anchored" data-anchor-id="ollama">Ollama</h3>
+<ol type="1">
+<li><p>Download ollama and install (available for Mac, Linux, and Windows).</p>
+<ul>
+<li><a href="https://ollama.com/" class="uri">https://ollama.com/</a></li>
+</ul></li>
+<li><p>Run ollama for the first time, you will see a llama icon in your menu bar.</p></li>
+<li><p>Now you can run your first test with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will download the model <code>llama3</code> and start an interactive chat session.</p>
+<p>When you are done, end chat with <code>\bye</code></p>
+<p><strong>You can download many other models using this terminal command:</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Parameters</th>
+<th>Size</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Llama 3</td>
+<td>8B</td>
+<td>4.7GB</td>
+<td><code>ollama run llama3</code></td>
+</tr>
+<tr class="even">
+<td>Llama 3</td>
+<td>70B</td>
+<td>40GB</td>
+<td><code>ollama run llama3:70b</code></td>
+</tr>
+<tr class="odd">
+<td>Phi 3 Mini</td>
+<td>3.8B</td>
+<td>2.3GB</td>
+<td><code>ollama run phi3</code></td>
+</tr>
+<tr class="even">
+<td>Phi 3 Medium</td>
+<td>14B</td>
+<td>7.9GB</td>
+<td><code>ollama run phi3:medium</code></td>
+</tr>
+<tr class="odd">
+<td>Gemma</td>
+<td>2B</td>
+<td>1.4GB</td>
+<td><code>ollama run gemma:2b</code></td>
+</tr>
+<tr class="even">
+<td>Gemma</td>
+<td>7B</td>
+<td>4.8GB</td>
+<td><code>ollama run gemma:7b</code></td>
+</tr>
+<tr class="odd">
+<td>Mistral</td>
+<td>7B</td>
+<td>4.1GB</td>
+<td><code>ollama run mistral</code></td>
+</tr>
+<tr class="even">
+<td>Moondream 2</td>
+<td>1.4B</td>
+<td>829MB</td>
+<td><code>ollama run moondream</code></td>
+</tr>
+<tr class="odd">
+<td>Neural Chat</td>
+<td>7B</td>
+<td>4.1GB</td>
+<td><code>ollama run neural-chat</code></td>
+</tr>
+<tr class="even">
+<td>Starling</td>
+<td>7B</td>
+<td>4.1GB</td>
+<td><code>ollama run starling-lm</code></td>
+</tr>
+<tr class="odd">
+<td>Code Llama</td>
+<td>7B</td>
+<td>3.8GB</td>
+<td><code>ollama run codellama</code></td>
+</tr>
+<tr class="even">
+<td>Llama 2 Uncensored</td>
+<td>7B</td>
+<td>3.8GB</td>
+<td><code>ollama run llama2-uncensored</code></td>
+</tr>
+<tr class="odd">
+<td>LLaVA</td>
+<td>7B</td>
+<td>4.5GB</td>
+<td><code>ollama run llava</code></td>
+</tr>
+<tr class="even">
+<td>Solar</td>
+<td>10.7B</td>
+<td>6.1GB</td>
+<td><code>ollama run solar</code></td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<blockquote class="blockquote">
+<p>Note: You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.</p>
+</blockquote>
+</section>
+<section id="open-webui-graphical-chat-app-for-ollama-models" class="level3">
+<h3 class="anchored" data-anchor-id="open-webui-graphical-chat-app-for-ollama-models">Open WebUI graphical chat app for ollama models</h3>
+<p>It would be nicer if we had a GUI chat interface to interact with the model and could get code responses in syntax-highlighted code blocks. We can do that and more by installing Open WebUI.</p>
+<p>Open WebUI can also be used with non-local models like ChatGPT and Github Copilot, but we will focus on local LLMs for this tutorial.</p>
+<p>Open WebUI: <a href="https://github.com/open-webui/open-webui" class="uri">https://github.com/open-webui/open-webui</a></p>
+<ol type="1">
+<li><p>You will need to have docker installed. The easiest method is to download and install Docker Desktop from here: <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a></p>
+<ul>
+<li>Docker Desktop is free and can be used for commercial use for companies up to 250 employees OR $10 million in yearly revenue.</li>
+</ul></li>
+<li><p>Once Docker Desktop is installed, run it. This will enable you to use the <code>docker</code> command from the terminal.</p>
+<ul>
+<li>There are other ways to install docker, you just need to be able to run <code>docker</code> and <code>docker compose</code> commands.</li>
+</ul></li>
+<li><p>Install and run Open WebUI with the following command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 3000:8080 –add-host=host.docker.internal:host-gateway <span class="at">-v</span> open-webui:/app/backend/data –name open-webui –restart always ghcr.io/open-webui/open-webui:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>In a web browser go to <a href="http://localhost:3000/c/e170b94b-c658-4413-9aaa-40cb8bbcdd30">http://localhost:3000</a></p>
+<ul>
+<li><p>Open WebUI will load</p></li>
+<li><p>You can install additional models from the menu</p></li>
+<li><p>You can save conversation chains</p></li>
+<li><p>You can select multiple models and ask a question and it will select the best suited model to answer your question.</p></li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="installing-danswer-for-rag-with-ollama-models" class="level2">
+<h2 class="anchored" data-anchor-id="installing-danswer-for-rag-with-ollama-models">Installing Danswer for RAG with ollama models</h2>
+<p>RAG stands for Retrieval-Augmented Generation. So far our models can answer questions and are great for giving code examples, but the model cannot access a web page or pull information from local documents. With Danswer, we can allow ollama models to do exactly that.</p>
+<p>This install is a little more involved than the last.</p>
+<ol type="1">
+<li></li>
+</ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

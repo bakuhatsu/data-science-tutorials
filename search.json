@@ -7,24 +7,45 @@
     "text": "About this blog"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "posts/local-llms/index.html",
+    "href": "posts/local-llms/index.html",
+    "title": "Setting up local LLMs using ollama",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome! Test\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "Brief overview\nProjects\nGithub\n(very brief) Quarto/this blog"
+  },
+  {
+    "objectID": "posts/local-llms/index.html#getting-started-in-rstudio",
+    "href": "posts/local-llms/index.html#getting-started-in-rstudio",
+    "title": "Setting up local LLMs using ollama",
+    "section": "",
+    "text": "Brief overview\nProjects\nGithub\n(very brief) Quarto/this blog"
+  },
+  {
+    "objectID": "posts/local-llms/index.html#installing-local-llms",
+    "href": "posts/local-llms/index.html#installing-local-llms",
+    "title": "Setting up local LLMs using ollama",
+    "section": "Installing local LLMs",
+    "text": "Installing local LLMs\n\nOllama\n\nDownload ollama and install (available for Mac, Linux, and Windows).\n\nhttps://ollama.com/\n\nRun ollama for the first time, you will see a llama icon in your menu bar.\nNow you can run your first test with:\nollama run llama3\nThis will download the model llama3 and start an interactive chat session.\nWhen you are done, end chat with \\bye\nYou can download many other models using this terminal command:\n\n\n\n\n\n\n\n\n\nModel\nParameters\nSize\nDownload\n\n\n\n\nLlama 3\n8B\n4.7GB\nollama run llama3\n\n\nLlama 3\n70B\n40GB\nollama run llama3:70b\n\n\nPhi 3 Mini\n3.8B\n2.3GB\nollama run phi3\n\n\nPhi 3 Medium\n14B\n7.9GB\nollama run phi3:medium\n\n\nGemma\n2B\n1.4GB\nollama run gemma:2b\n\n\nGemma\n7B\n4.8GB\nollama run gemma:7b\n\n\nMistral\n7B\n4.1GB\nollama run mistral\n\n\nMoondream 2\n1.4B\n829MB\nollama run moondream\n\n\nNeural Chat\n7B\n4.1GB\nollama run neural-chat\n\n\nStarling\n7B\n4.1GB\nollama run starling-lm\n\n\nCode Llama\n7B\n3.8GB\nollama run codellama\n\n\nLlama 2 Uncensored\n7B\n3.8GB\nollama run llama2-uncensored\n\n\nLLaVA\n7B\n4.5GB\nollama run llava\n\n\nSolar\n10.7B\n6.1GB\nollama run solar\n\n\n\n\n\nNote: You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.\n\n\n\nOpen WebUI graphical chat app for ollama models\nIt would be nicer if we had a GUI chat interface to interact with the model and could get code responses in syntax-highlighted code blocks. We can do that and more by installing Open WebUI.\nOpen WebUI can also be used with non-local models like ChatGPT and Github Copilot, but we will focus on local LLMs for this tutorial.\nOpen WebUI: https://github.com/open-webui/open-webui\n\nYou will need to have docker installed. The easiest method is to download and install Docker Desktop from here: https://www.docker.com/products/docker-desktop/\n\nDocker Desktop is free and can be used for commercial use for companies up to 250 employees OR $10 million in yearly revenue.\n\nOnce Docker Desktop is installed, run it. This will enable you to use the docker command from the terminal.\n\nThere are other ways to install docker, you just need to be able to run docker and docker compose commands.\n\nInstall and run Open WebUI with the following command:\ndocker run -d -p 3000:8080 –add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data –name open-webui –restart always ghcr.io/open-webui/open-webui:main\nIn a web browser go to http://localhost:3000\n\nOpen WebUI will load\nYou can install additional models from the menu\nYou can save conversation chains\nYou can select multiple models and ask a question and it will select the best suited model to answer your question."
+  },
+  {
+    "objectID": "posts/local-llms/index.html#installing-danswer-for-rag-with-ollama-models",
+    "href": "posts/local-llms/index.html#installing-danswer-for-rag-with-ollama-models",
+    "title": "Setting up local LLMs using ollama",
+    "section": "Installing Danswer for RAG with ollama models",
+    "text": "Installing Danswer for RAG with ollama models\nRAG stands for Retrieval-Augmented Generation. So far our models can answer questions and are great for giving code examples, but the model cannot access a web page or pull information from local documents. With Danswer, we can allow ollama models to do exactly that.\nThis install is a little more involved than the last."
   },
   {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "title": "Getting to know ggplot2",
     "section": "",
-    "text": "This is a post with executable code."
+    "text": "This is a post with executable code. Testing adding text here.\n\nplot(1,1)"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Data-science-tutorials",
+    "title": "Data Science Tutorials",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJun 3, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMay 31, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Getting to know ggplot2\n\n\n\n\n\n\n\ncode\n\n\nplotting\n\n\n\n\n\n\n\n\n\n\n\nJun 10, 2024\n\n\nElizabeth Leshuk\n\n\n\n\n\n\n  \n\n\n\n\nSetting up local LLMs using ollama\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJun 3, 2024\n\n\nSven Nelson\n\n\n\n\n\n\nNo matching items"
   }
 ]
