@@ -191,6 +191,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="installing-local-llms" class="level2">
 <h2 class="anchored" data-anchor-id="installing-local-llms">Installing local LLMs</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://ollama.com/"><img src="https://ollama.com/public/ollama.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
 <section id="ollama" class="level3">
 <h3 class="anchored" data-anchor-id="ollama">Ollama</h3>
 <ol type="1">
@@ -319,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><p>You will need to have docker installed. The easiest method is to download and install Docker Desktop from here: <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a></p>
 <ul>
-<li>Docker Desktop is free and can be used for commercial use for companies up to 250 employees OR $10 million in yearly revenue.</li>
+<li><em>Docker Desktop is free and can be used for commercial use for companies up to 250 employees OR $10 million in yearly revenue.</em></li>
 </ul></li>
 <li><p>Once Docker Desktop is installed, run it. This will enable you to use the <code>docker</code> command from the terminal.</p>
 <ul>
@@ -327,12 +332,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><p>Install and run Open WebUI with the following command:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 3000:8080 –add-host=host.docker.internal:host-gateway <span class="at">-v</span> open-webui:/app/backend/data –name open-webui –restart always ghcr.io/open-webui/open-webui:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>In a web browser go to <a href="http://localhost:3000/c/e170b94b-c658-4413-9aaa-40cb8bbcdd30">http://localhost:3000</a></p>
+<li><p>In a web browser go to <a href="http://localhost:3000" class="uri">http://localhost:3000</a></p>
 <ul>
 <li><p>Open WebUI will load</p></li>
-<li><p>You can install additional models from the menu</p></li>
+<li><p>You can install additional models from the menu</p>
+<ul>
+<li>Install <code>llama3:instruct</code>, we will need it later.</li>
+</ul></li>
 <li><p>You can save conversation chains</p></li>
 <li><p>You can select multiple models and ask a question and it will select the best suited model to answer your question.</p></li>
+</ul></li>
+<li><p><em>(bonus)</em> For anyone running MacOS 13 or higher, open the link in Safari and from the menu bar, choose File &gt; Add to Dock. This will create a standalone webapp.</p>
+<ul>
+<li>More info here: <a href="https://support.apple.com/en-us/104996" class="uri">https://support.apple.com/en-us/104996</a></li>
 </ul></li>
 </ol>
 </section>
@@ -340,10 +352,106 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="installing-danswer-for-rag-with-ollama-models" class="level2">
 <h2 class="anchored" data-anchor-id="installing-danswer-for-rag-with-ollama-models">Installing Danswer for RAG with ollama models</h2>
 <p>RAG stands for Retrieval-Augmented Generation. So far our models can answer questions and are great for giving code examples, but the model cannot access a web page or pull information from local documents. With Danswer, we can allow ollama models to do exactly that.</p>
+<p>Danswer: <a href="https://www.danswer.ai/" class="uri">https://www.danswer.ai/</a></p>
+<p>Danswer Github: <a href="https://github.com/danswer-ai/danswer" class="uri">https://github.com/danswer-ai/danswer</a></p>
 <p>This install is a little more involved than the last.</p>
 <ol type="1">
-<li></li>
+<li><p>Go to the Danswer website (<a href="https://www.danswer.ai/" class="uri">https://www.danswer.ai/</a>) and click “Self-host for Free.”</p>
+<ul>
+<li><p>This will take you here: <a href="https://docs.danswer.dev/quickstart" class="uri">https://docs.danswer.dev/quickstart</a></p></li>
+<li><p>We will follow the instructions on that page (and then make some changes)</p></li>
+</ul></li>
+<li><p>Clone the <a href="https://github.com/danswer-ai/danswer"><strong>Danswer</strong></a> repo:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/danswer-ai/danswer.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Navigate to <strong>danswer/deployment/docker_compose</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> danswer/deployment/docker_compose</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Edit the file <code>danswer/deployment/docker_compose/docker-compose.dev.yml</code></p>
+<ul>
+<li><p>Find <code>"3000:80"</code> and change it to <code>"3001:80"</code></p></li>
+<li><p>This will make the webapp available at <a href="http://localhost:3001" class="uri">http://localhost:3001</a> since we are already using port <code>3000</code> for Open WebUI</p></li>
+</ul></li>
+<li><p>To connect danswer to ollama, create a file called <code>.env</code> in the <code>danswer/deployment/docker_compose</code> directory:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Add the following to the file:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">GEN_AI_MODEL_PROVIDER=ollama_chat</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Model of your choice</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">GEN_AI_MODEL_VERSION=llama3:instruct</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Wherever Ollama is running</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Hint: To point Docker containers to http://localhost:11434, use host.docker.internal instead of localhost</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">GEN_AI_API_ENDPOINT=http://host.docker.internal:11434</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's also make some changes to accommodate the weaker locally hosted LLM</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">QA_TIMEOUT=120</span><span class="co">  # Set a longer timeout, running models on CPU can be slow</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Always run search, never skip</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">DISABLE_LLM_CHOOSE_SEARCH=True</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Don't use LLM for reranking, the prompts aren't properly tuned for these models</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="at">DISABLE_LLM_CHUNK_FILTER=True</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Don't try to rephrase the user query, the prompts aren't properly tuned for these models</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="at">DISABLE_LLM_QUERY_REPHRASE=True</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Don't use LLM to automatically discover time/source filters</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="at">DISABLE_LLM_FILTER_EXTRACTION=True</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment this one if you find that the model is struggling (slow or distracted by too many docs)</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use only 1 section from the documents and do not require quotes</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="at">QA_PROMPT_OVERRIDE=weak</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Make sure Docker Desktop is running.</p></li>
+<li><p>To start the application run: (run this from within <code>danswer/deployment/docker_compose</code>)</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> docker-compose.dev.yml <span class="at">-p</span> danswer-stack up <span class="at">-d</span> <span class="at">--pull</span> always <span class="at">--force-recreate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>This step may take a little while to download everything and install.</li>
+</ul></li>
+<li><p>Go to <a href="http://localhost:3001" class="uri">http://localhost:3001</a> to load the webapp</p>
+<ul>
+<li><p>You will need to set up the app before you can start using it:</p>
+<ol type="1">
+<li>Go to “<strong>Search / Chat with Knowledge” &gt; “Get started”</strong></li>
+<li>Select the “Custom” tab</li>
+<li>Fill in the following values: (<strong>none of these are optional even if it say it is</strong>)
+<ul>
+<li><p>Display Name: ollama</p></li>
+<li><p>Provide Name: ollama</p></li>
+<li><p>API Base: http://host.docker.internal:11434</p></li>
+<li><p>Model Names:</p>
+<ul>
+<li><p>llama3:instruct</p></li>
+<li><p>llama3:latest</p></li>
+<li><p><em>(you can add more here if you have more installed)</em></p></li>
+</ul></li>
+<li><p>Default Model: llama3:instruct</p></li>
+</ul></li>
+<li>Click “Test” to see if all of your settings are correct.
+<ul>
+<li><p>If it’s successful, you may be good to go</p></li>
+<li><p>You will know for sure once you test running a chat.</p></li>
+</ul></li>
+<li>Click “Enable”</li>
+<li>Click “Setup your first connector”
+<ul>
+<li><p>You can add a document or link to include in your search</p></li>
+<li><p>Danswer also makes it possible to link popular services like Slack and Google docs</p></li>
+<li><p>Try to keep your document/website size small enough. If you try to index all of Google your connector will fail.</p></li>
+</ul></li>
+</ol></li>
+</ul></li>
+<li><p>If things don’t work at first, stop the docker process completely and run this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> docker-compose.dev.yml <span class="at">-p</span> danswer-stack up <span class="at">-d</span> <span class="at">--pull</span> always <span class="at">--force-recreate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Sometimes this is required to run a few times to make sure the <code>.env</code> file is being used for some reason.</p></li>
+<li><p>Potentially restart ollama and docker if that doesn’t work</p></li>
+</ul></li>
+<li><p><em>(bonus)</em> For anyone running MacOS 13 or higher, open the link in Safari and from the menu bar, choose File &gt; Add to Dock. This will create a standalone webapp.</p>
+<ul>
+<li>More info here: <a href="https://support.apple.com/en-us/104996" class="uri">https://support.apple.com/en-us/104996</a></li>
+</ul></li>
 </ol>
+</section>
+<section id="code-completion-and-generation-using-continue" class="level2">
+<h2 class="anchored" data-anchor-id="code-completion-and-generation-using-continue">Code completion and generation using Continue</h2>
+<p>I haven’t tested this one yet, but it was on the ollama blog and should work well using the local LLMs installed with ollama. Continue acts as your own AI code assistant within your IDE. It works with VScode and JetBrains for now.</p>
+<p>Continue: <a href="https://www.continue.dev/" class="uri">https://www.continue.dev/</a></p>
+<p>VScode extension: <a href="https://marketplace.visualstudio.com/items?itemName=Continue.continue" class="uri">https://marketplace.visualstudio.com/items?itemName=Continue.continue</a></p>
+<p>ollama blog post: <a href="https://ollama.com/blog/continue-code-assistant" class="uri">https://ollama.com/blog/continue-code-assistant</a></p>
 
 
 </section>
