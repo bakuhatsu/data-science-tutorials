@@ -394,7 +394,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="at">DISABLE_LLM_FILTER_EXTRACTION=True</span></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment this one if you find that the model is struggling (slow or distracted by too many docs)</span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use only 1 section from the documents and do not require quotes</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="at">QA_PROMPT_OVERRIDE=weak</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="at">QA_PROMPT_OVERRIDE=weak</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>IMPORTANT:</strong> Add an empty return at the end. The final empty line at the end appears important.</li>
+</ul></li>
 <li><p>Make sure Docker Desktop is running.</p></li>
 <li><p>To start the application run: (run this from within <code>danswer/deployment/docker_compose</code>)</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> docker-compose.dev.yml <span class="at">-p</span> danswer-stack up <span class="at">-d</span> <span class="at">--pull</span> always <span class="at">--force-recreate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
