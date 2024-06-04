@@ -1,0 +1,13 @@
+---
+title: "Getting to know ggplot2"
+author: "Elizabeth Leshuk"
+date: "2024-06-10"
+categories: [code, plotting]
+image: "image.jpg"
+---
+
+This is a post with executable code. Testing adding text here.
+
+```{r}
+plot(1,1)
+```

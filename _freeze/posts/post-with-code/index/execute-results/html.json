@@ -1,0 +1,16 @@
+{
+  "hash": "8326d6120b22dd09a5395ef91bd7926b",
+  "result": {
+    "markdown": "---\ntitle: \"Getting to know ggplot2\"\nauthor: \"Elizabeth Leshuk\"\ndate: \"2024-06-10\"\ncategories: [code, plotting]\nimage: \"image.jpg\"\n---\n\n\nThis is a post with executable code. Testing adding text here.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nplot(1,1)\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
