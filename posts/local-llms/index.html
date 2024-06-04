@@ -327,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>There are other ways to install docker, you just need to be able to run <code>docker</code> and <code>docker compose</code> commands.</li>
 </ul></li>
 <li><p>Install and run Open WebUI with the following command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 3000:8080 –add-host=host.docker.internal:host-gateway <span class="at">-v</span> open-webui:/app/backend/data –name open-webui –restart always ghcr.io/open-webui/open-webui:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 3000:8080 <span class="at">--add-host</span><span class="op">=</span>host.docker.internal:host-gateway <span class="at">-v</span> open-webui:/app/backend/data <span class="at">--name</span> open-webui <span class="at">--restart</span> always ghcr.io/open-webui/open-webui:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>In a web browser go to <a href="http://localhost:3000" class="uri">http://localhost:3000</a></p>
 <ul>
 <li><p>Open WebUI will load</p></li>
