@@ -3,6 +3,7 @@ title: "Setting up local LLMs using ollama"
 author: "Sven Nelson"
 date: "2024-06-03"
 categories: [LLMs]
+image: "https://ollama.com/public/ollama.png"
 format:
   html:
     code-overflow: wrap
