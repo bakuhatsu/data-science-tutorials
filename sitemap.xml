@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bakuhatsu.github.io/data-science-tutorials/about.html</loc>
-    <lastmod>2024-06-04T19:36:29.048Z</lastmod>
+    <lastmod>2024-06-03T21:04:23.678Z</lastmod>
   </url>
   <url>
-    <loc>https://bakuhatsu.github.io/data-science-tutorials/posts/local-llms/index.html</loc>
-    <lastmod>2024-06-04T19:36:29.049Z</lastmod>
+    <loc>https://bakuhatsu.github.io/data-science-tutorials/posts/shiny-apps/index.html</loc>
+    <lastmod>2024-06-25T05:04:22.215Z</lastmod>
   </url>
   <url>
     <loc>https://bakuhatsu.github.io/data-science-tutorials/posts/ggplot2/index.html</loc>
-    <lastmod>2024-06-11T16:35:50.190Z</lastmod>
+    <lastmod>2024-06-21T20:06:14.848Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bakuhatsu.github.io/data-science-tutorials/posts/local-llms/index.html</loc>
+    <lastmod>2024-06-21T21:02:02.837Z</lastmod>
   </url>
   <url>
     <loc>https://bakuhatsu.github.io/data-science-tutorials/index.html</loc>
-    <lastmod>2024-06-04T19:36:29.049Z</lastmod>
+    <lastmod>2024-06-04T07:38:48.376Z</lastmod>
   </url>
 </urlset>
