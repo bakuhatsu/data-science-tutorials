@@ -9,6 +9,9 @@ listing:
   filter-ui: false
 page-layout: full
 title-block-banner: true
+format:
+  html:
+    code-overflow: wrap
 ---
 
 
