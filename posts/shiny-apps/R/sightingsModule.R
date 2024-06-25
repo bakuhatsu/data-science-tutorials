@@ -6,7 +6,7 @@
 
 #### User Interface ####
 # Define UI for application that draws a histogram
-sightingsInput <- function(id, label = "Sightings", specs, locs, sel) {
+sightingsInput <- function(id, label = "Sightings", specs, locs, sel = "Monarch Butterfly") {
   ns <- NS(id)
   tagList(
     h4(label),

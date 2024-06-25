@@ -495,7 +495,7 @@ The file **sightingsModule.R** below:
 
 #### User Interface ####
 # Define UI for application that draws a histogram
-sightingsInput <- function(id, label = "Sightings", specs, locs, sel) {
+sightingsInput <- function(id, label = "Sightings", specs, locs, sel = "Monarch Butterfly") {
   ns <- NS(id)
   tagList(
     h4(label),
@@ -532,6 +532,96 @@ sightingsServer <- function(id, specs, locs) {
   )
 }
 ```
+
+The file **app.R** with the shiny app using a single instance of the same module.
+
+``` r
+###############################################################################
+# Sven Nelson                                                                 #
+# 6/24/2024                                                                   #
+# Shiny app for plotting species occurrence from GBIF.                        #
+###############################################################################
+
+#### Imports ####
+require(shiny)
+require(tidygeocoder)
+
+source("../R/plot_sightings.R")
+source("../R/add_polygon_col.R")
+source("../R/sightingsModule.R")
+
+#### Setup ####
+# Set up a dataframe to use connecting names with species
+specs <- tibble::tribble(
+  ~name,                        ~species,                 ~short_name,    ~clr,
+  "Monarch Butterfly",          "Danaus plexippus",       "Monarch",      "cyan",
+  "Northern Cardinal",          "Cardinalis cardinalis",  "Cardinal",     "red",
+  "Ruby Throated Hummingbird",  "Archilochus colubris",   "Hummingbird",  "pink",
+  "White-Throated Sparrow",     "Zonotrichia albicollis", "Sparrow",      "yellow"
+)
+
+# Create the table of possible cities to check
+locs <- tibble::tribble(
+  ~name,            ~address,
+  "Evansville",     "Evansville, IN",
+  "West Lafayette", "West Lafayette, IN 47907", 
+  "Davis",          "Davis, CA",
+  "Seattle",        "Seattle, WA",
+  "New Jersey",     "New Jersey, NY",
+  "Miami",          "Miami, FL",
+  "LA",             "Los Angelos, CA"
+)
+# Variable to keep track of whether data needs to be reloaded
+reload_data <- TRUE
+if (file.exists("locs.rds")) {
+  locs2 <- readRDS("locs.rds")
+  
+  if (dplyr::all_equal(locs, locs2[,1:2]) & ncol(locs2) == 5) {
+    locs <- locs2
+    reload_data <- FALSE
+  }
+} 
+
+if (reload_data) {
+  # Get latitude and longitude
+  locs <- geocode(locs, address, method = "osm", lat = latitude, long = longitude)
+  
+  # Populate a column in the data frame with the POLYGON call for each location
+  locs <- add_polygon_col(locs)
+  saveRDS(locs, file = "locs.rds")
+}
+
+#### User Interface ####
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+  
+  # Application title
+  titlePanel("Organism migration tracking"),
+  
+  # Sidebar with a slider input for number of bins 
+  sidebarLayout(
+    sidebarPanel(
+      sightingsInput("plot1", "Plot 1", specs, locs)
+    ),
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+      sightingsOutput("plot1", "Plot 1")
+    )
+  )
+)
+
+#### Server function ####
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+  sightingsServer("plot1", specs, locs)
+}
+
+#### Run app ####
+shinyApp(ui = ui, server = server)
+```
+
+#### Multiple instances
 
 The file **app.R** with the shiny app using multiple instances of the same module.
 
