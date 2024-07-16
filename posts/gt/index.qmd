@@ -8,13 +8,148 @@ execute:
   echo: true
   results: 'hide' 
   fig-show: 'hold'
+format:
+  html:
+    html-table-processing: none
 ---
 
 ### What is gt?
 
+The *grammar of tables* package makes it easy to create pretty output tables. Similar to ggplot, it allows you to construct a table using various elements, giving significant control over what the final outcome looks like.
+
+This image shows the parts of a gt table.
+
+![](images/gt_parts_of_a_table.svg){width="590"}
+
+![](images/gt_workflow_diagram.svg){width="588"}
+
+There are a variety of different functions that allow you to tailor your table to your specific needs. Those functions can be found in the [Package index](https://gt.rstudio.com/reference/index.html).
+
 ### Data
 
-Spotify API
+To better demonstrate the abilities of gt, we're going to use the Spotify API to pull data from my *current* favorite artist. This process requires you to set up a Spotify app which is more work than we need to do right now, so I've shared the data with you. For instructions on how to set
 
-```{python}
+```{r}
+library(httr)
+library(yaml)
+config <- yaml::yaml.load_file(input = "config.yml")
+# Get access token
+get_token <- POST(
+  url = "https://accounts.spotify.com/api/token",
+  add_headers("Content-Type" = "application/x-www-form-urlencoded"),
+  body = list(
+    grant_type = "client_credentials",
+    client_id = config$client_id,
+    client_secret = config$client_secret
+  ),
+  encode = "form"
+)
+
+access_token1 <- content(get_token, "parsed")
+access_token <- access_token1$access_token
+
+chappell_roan_id <- "7GlBOeep6PqTfFi59PTUUN"
+
+response <- GET(
+  url = paste0("https://api.spotify.com/v1/artists/", chappell_roan_id),
+  add_headers(Authorization = paste("Bearer", access_token))
+)
+
+content <- content(response, "parsed")
 ```
+
+```{r}
+# Get Spotify's playlist called "Today's Top Hits".
+library(plyr)
+playlist_id <- "37i9dQZF1DXcBWIGoYBM5M"
+response <- GET(
+  url = paste0("https://api.spotify.com/v1/playlists/", playlist_id),
+  add_headers(Authorization = paste("Bearer", access_token))
+)
+
+playlist_content <- content(response, "parsed")
+# playlist_data <- plyr::ldply(playlist_content)
+track_name <- playlist_content$tracks$items[[1]]$track$name
+track_artist <- playlist_content$tracks$items[[1]]$track$artists[[1]]$name
+
+artist_list <- c()
+track_list <- c()
+for (i in 1:length(playlist_content$tracks$items)){
+  track_name <- playlist_content$tracks$items[[i]]$track$name
+  track_artist <- playlist_content$tracks$items[[i]]$track$artists[[1]]$name
+  track_list[[i]] <- track_name
+  artist_list[[i]] <- track_artist
+  
+}
+
+track_data <- do.call(rbind, track_list)
+artist_data <- do.call(rbind, artist_list)
+
+track_df <- as.data.frame(track_data)
+artist_df <- as.data.frame(artist_data)
+
+names(track_df)[names(track_df) == 'V1'] <- 'track'
+names(artist_df)[names(artist_df) == 'V1'] <- 'artist'
+
+# Combine
+all_data <- cbind(artist_df, track_df)
+all_data$rank <- c(1:nrow(all_data))
+all_data <- all_data |> 
+  dplyr::relocate(rank, .before = artist)
+```
+
+### Display a simple gt table
+
+```{r}
+# Create a gt table with Spotify's top 50 tracks
+library(gt)
+all_data |> 
+  gt() |> 
+  tab_header(
+    title = "Spotify Top 50"
+  )
+```
+
+Check to see if there are any repeats artists in the Top 50 and list their songs.
+
+```{r message=FALSE}
+library(dplyr)
+# Get all data with duplicated artists
+# Can combine data cleaning/manipulating with gt()
+unique_duplicates <- all_data |> 
+  dplyr::group_by(artist) |> 
+  filter(n() > 1) |> 
+# Add them to a table with sub rows and add colors to those who are in the top 10
+  gt() |> 
+  tab_header(
+    title = "Artists with multiple Top 50 Songs",
+    subtitle = html(
+      "Link to info", "<a href = 'https://gt.rstudio.com/reference/data_color.html'>data_color</a>"
+      )
+    ) |>
+  # Add color to songs that are in the top 10
+  data_color(
+    columns = rank,
+    target_columns = c(rank, track),
+    rows = rank <= 10,
+    method = "numeric",
+    palette = c("#5bb450")
+  ) |> 
+  # Add footnote about the color
+  tab_footnote(footnote = "Green indicates songs in the Top 10")
+
+unique_duplicates
+```
+
+### Note
+
+I had issues with rows being automatically striped every other row. The default for gt is for alternating stripes to be disabled (though it can be enabled with opt_row_striping(row_striping = TRUE). This turned out to be a Quarto issue, so I had to put section this in my header:
+
+---
+# ---
+#format: 
+  #html: 
+    #html-table-processing: none
+---
+
+See the documentation here: [**Disabling Quarto Table Processing**](https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing)
