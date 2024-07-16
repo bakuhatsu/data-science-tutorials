@@ -1,0 +1,20 @@
+---
+title: "Getting to know gt"
+author: "Elizabeth Leshuk"
+date: "2024-07-17"
+categories: [code, tables]
+image: "image.jpg"
+execute:
+  echo: true
+  results: 'hide' 
+  fig-show: 'hold'
+---
+
+### What is gt?
+
+### Data
+
+Spotify API
+
+```{python}
+```
