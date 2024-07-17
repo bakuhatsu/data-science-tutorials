@@ -181,7 +181,7 @@ I had issues with rows being automatically striped every other row. The default 
 
 See the documentation here: [**Disabling Quarto Table Processing**](https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing)
 
-Get the Top 10 songs for the Spotify Top 50, top artist
+Get the Top 10 songs for the #1 Spotify Top 50 Artist
 
 ```{r}
 # Get more data about the top artist
