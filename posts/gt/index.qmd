@@ -32,6 +32,7 @@ To better demonstrate the abilities of gt, we're going to use the Spotify API to
 ```{r}
 library(httr)
 library(yaml)
+# TO DO: add need to add your own personal account info in a config folder note
 config <- yaml::yaml.load_file(input = "config.yml")
 # Get access token
 get_token <- POST(
@@ -48,14 +49,39 @@ get_token <- POST(
 access_token1 <- content(get_token, "parsed")
 access_token <- access_token1$access_token
 
-chappell_roan_id <- "7GlBOeep6PqTfFi59PTUUN"
+# chappell_roan_id <- "7GlBOeep6PqTfFi59PTUUN"
 
-response <- GET(
-  url = paste0("https://api.spotify.com/v1/artists/", chappell_roan_id),
-  add_headers(Authorization = paste("Bearer", access_token))
-)
+# response <- GET(
+#   url = paste0("https://api.spotify.com/v1/artists/", chappell_roan_id),
+#   add_headers(Authorization = paste("Bearer", access_token))
+# )
 
-content <- content(response, "parsed")
+# content <- content(response, "parsed")
+
+
+#url <- "https://example.com/v1/refresh"
+#headers <- c("Content-Type" = "application/x-www-form-urlencoded")
+#body <- list(refresh_token = access_token)
+
+#response <- POST(url, 
+                 # add_headers(headers), 
+                 # body = body, 
+                 # encode = "form")
+
+# Print the response status code
+#print(status_code(response))
+
+# Print the response content
+#print(content(response, "text"))
+
+# my_top_5 <- GET(
+#   url = paste0("https://api.spotify.com/v1/me/top/tracks"),
+#   add_headers(Authorization = paste0("Bearer ", access_token))
+# )
+# 
+# top5 <- content(my_top_5, "parsed")
+# 
+# top5
 ```
 
 ```{r}
@@ -96,6 +122,7 @@ all_data <- cbind(artist_df, track_df)
 all_data$rank <- c(1:nrow(all_data))
 all_data <- all_data |> 
   dplyr::relocate(rank, .before = artist)
+
 ```
 
 ### Display a simple gt table
@@ -143,7 +170,7 @@ unique_duplicates
 
 ### Note
 
-I had issues with rows being automatically striped every other row. The default for gt is for alternating stripes to be disabled (though it can be enabled with opt_row_striping(row_striping = TRUE). This turned out to be a Quarto issue, so I had to put section this in my header:
+I had issues with rows being automatically striped every other row. The default for gt is for alternating stripes to be disabled (though it can be enabled with opt_row_striping(row_striping = TRUE)). This turned out to be a Quarto issue, so I had to put section this in my header:
 
 ---
 # ---
@@ -153,3 +180,62 @@ I had issues with rows being automatically striped every other row. The default 
 ---
 
 See the documentation here: [**Disabling Quarto Table Processing**](https://quarto.org/docs/authoring/tables.html#disabling-quarto-table-processing)
+
+Get the Top 10 songs for the Spotify Top 50, top artist
+
+```{r}
+# Get more data about the top artist
+library(httr)
+library(yaml)
+library(gt)
+library(dplyr)
+config <- yaml::yaml.load_file(input = "config.yml")
+# Get access token
+get_token <- POST(
+  url = "https://accounts.spotify.com/api/token",
+  add_headers("Content-Type" = "application/x-www-form-urlencoded"),
+  body = list(
+    grant_type = "client_credentials",
+    client_id = config$client_id,
+    client_secret = config$client_secret
+  ),
+  encode = "form"
+)
+
+access_token1 <- content(get_token, "parsed")
+access_token <- access_token1$access_token
+
+# Get Spotify Top artist
+top_artist <- all_data$artist[1]
+
+# Get Top Artist ID
+id <- playlist_content$tracks$items[[1]]$track$artists[[1]]$id
+
+top1_top <- GET(
+  url = paste0("https://api.spotify.com/v1/artists/", id, "/top-tracks"),
+  add_headers(Authorization = paste("Bearer", access_token))
+)
+
+top1_top_songs <- content(top1_top, "parsed")
+
+top_track_list <- c()
+for (i in 1:length(top1_top_songs$tracks)){
+  track_name <- top1_top_songs$tracks[[i]]$name
+  top_track_list[[i]] <- track_name
+}
+top_track_df <- do.call(rbind, top_track_list)
+top_track_df <- as.data.frame(top_track_df)
+
+
+top_track_df |> 
+  dplyr::rename("Track Name" = V1) |> 
+  dplyr::mutate(Artist = top_artist) |> 
+  dplyr::relocate(Artist, .before = "Track Name") |> 
+  dplyr::mutate(rank = row_number()) |> 
+  dplyr::relocate(rank, .before = "Artist") |> 
+  gt() |> 
+  tab_header(
+  title = paste0(top_artist, " Top ", nrow(top_track_df), " Songs"),
+  subtitle = "Per Spotify")
+
+```
