@@ -6,8 +6,8 @@ categories: [code, tables]
 image: "images/gt_img.svg"
 execute:
   echo: true
-  results: 'hide' 
-  fig-show: 'hold'
+  # results: 'hide' 
+  # fig-show: 'hold'
 format:
   html:
     html-table-processing: none
