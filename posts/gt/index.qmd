@@ -3,7 +3,7 @@ title: "Getting to know gt"
 author: "Elizabeth Leshuk"
 date: "2024-07-17"
 categories: [code, tables]
-image: "image.jpg"
+image: "images/gt_img.svg"
 execute:
   echo: true
   results: 'hide' 
@@ -29,7 +29,7 @@ There are a variety of different functions that allow you to tailor your table t
 
 To better demonstrate the abilities of gt, we're going to use the Spotify API to pull data from my *current* favorite artist. This process requires you to set up a Spotify app which is more work than we need to do right now, so I've shared the data with you. For instructions on how to set
 
-```{r}
+```{r spotify_connect, warning=FALSE, echo=FALSE} 
 library(httr)
 library(yaml)
 # TO DO: add need to add your own personal account info in a config folder note
@@ -84,7 +84,7 @@ access_token <- access_token1$access_token
 # top5
 ```
 
-```{r}
+```{r get_top_hits, warning=FALSE, echo=FALSE}
 # Get Spotify's playlist called "Today's Top Hits".
 library(plyr)
 playlist_id <- "37i9dQZF1DXcBWIGoYBM5M"
@@ -127,7 +127,7 @@ all_data <- all_data |>
 
 ### Display a simple gt table
 
-```{r}
+```{r display_simple, warning=FALSE, echo=FALSE}
 # Create a gt table with Spotify's top 50 tracks
 library(gt)
 all_data |> 
@@ -139,7 +139,7 @@ all_data |>
 
 Check to see if there are any repeats artists in the Top 50 and list their songs.
 
-```{r message=FALSE}
+```{r get_repeats, message=FALSE, echo=FALSE, warning=FALSE}
 library(dplyr)
 # Get all data with duplicated artists
 # Can combine data cleaning/manipulating with gt()
@@ -183,7 +183,7 @@ See the documentation here: [**Disabling Quarto Table Processing**](https://quar
 
 Get the Top 10 songs for the #1 Spotify Top 50 Artist
 
-```{r}
+```{r get_more_data, warning=FALSE, echo=FALSE}
 # Get more data about the top artist
 library(httr)
 library(yaml)
