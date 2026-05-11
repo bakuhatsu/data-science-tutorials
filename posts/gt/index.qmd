@@ -3,7 +3,7 @@ title: "Getting to know gt"
 author: "Elizabeth Leshuk"
 date: "2024-07-17"
 categories: [code, tables]
-image: "images/gt_img.png"
+image: "images/gt_img.svg"
 execute:
   echo: true
   # results: 'hide' 
